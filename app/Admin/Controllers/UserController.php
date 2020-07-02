@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\User;
+use App\Models\User;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -19,23 +19,19 @@ class UserController extends AdminController
     {
         return Grid::make(new User(), function (Grid $grid) {
             $grid->id->sortable();
-//            $grid->name->editable();
+            $grid->phone->sortable();
             $grid->email;
-            //$grid->email_verified_at;
-            //$grid->password;
-            //$grid->remember_token;
-            $grid->created_at;
+            $grid->nickname;
+            $grid->avatar;
+            $grid->wx_openid;
+            $grid->ml_openid;
+            $grid->created_at->sortable();
             $grid->updated_at->sortable();
-//            $grid->name()->switchGroup();
-            $grid->switch_group->switchGroup([
-                'hot'        => '热门',
-                'new'        => '最新',
-                'recommend'  => '推荐',
-                'image.show' => '显示图片', // 更新对应关联模型
-            ]);
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+                $filter->equal('phone');
+
             });
         });
     }
@@ -51,11 +47,12 @@ class UserController extends AdminController
     {
         return Show::make($id, new User(), function (Show $show) {
             $show->id;
-            $show->name;
+            $show->phone;
             $show->email;
-            $show->email_verified_at;
-            $show->password;
-            $show->remember_token;
+            $show->nickname;
+            $show->avatar;
+            $show->wx_openid;
+            $show->ml_openid;
             $show->created_at;
             $show->updated_at;
         });
@@ -70,11 +67,12 @@ class UserController extends AdminController
     {
         return Form::make(new User(), function (Form $form) {
             $form->display('id');
-//            $form->text('name');
+            $form->text('phone');
             $form->text('email');
-            $form->text('email_verified_at');
-            $form->text('password');
-            $form->text('remember_token');
+            $form->text('nickname');
+            $form->text('avatar');
+            $form->text('wx_openid');
+            $form->text('ml_openid');
         
             $form->display('created_at');
             $form->display('updated_at');

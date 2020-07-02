@@ -21,17 +21,25 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-//    'middleware' => ['serializer:array']
+    'middleware' => ['serializer:array']
 ], function ($api) {
 
     $api->get('auth','AuthController@index')->name('api.auth.index');
     $api->post('auth','AuthController@testLogin')->name('api.auth.store');
+    // 登陆 绑定路由，可依赖注入获取id
+    $api->group(['middleware' => ['bindings']], function ($api) {
 
-    // 个人信息
-    $api->get('meShow','AuthController@meShow')->name('api.auth.meShow');
-    // 退出
-    $api->delete('auth/current', 'AuthController@destroy')->name('api.auth.destroy');
+        $api->group(['middleware' => ['auth:api']], function ($api) {
 
-    $api->resource('user_addresses', 'UserAddressesController');   // 类型
+            // 个人信息
+            $api->get('meShow', 'AuthController@meShow')->name('api.auth.meShow');
+            // 退出
+            $api->delete('auth/current', 'AuthController@destroy')->name('api.auth.destroy');
+            $api->resource('user_addresses', 'UserAddressesController');   // 地址
+        });
+
+        $api->get('products', 'ProductController@index')->name('api.product.index');
+        $api->get('products/{product}', 'ProductController@show')->name('api.product.show');
+    });
 
 });
