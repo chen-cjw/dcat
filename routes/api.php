@@ -36,10 +36,16 @@ $api->version('v1', [
             // 退出
             $api->delete('auth/current', 'AuthController@destroy')->name('api.auth.destroy');
             $api->resource('user_addresses', 'UserAddressesController');   // 地址
+
+            $api->get('products/favorites', 'ProductsController@favorites')->name('api.products.favorites');
+            // 收藏商品 favor
+            $api->post('products/{product}/favorite', 'ProductsController@favor')->name('api.products.favor');
+            $api->delete('products/{product}/favorite', 'ProductsController@disfavor')->name('api.products.disfavor');
+
         });
 
-        $api->get('products', 'ProductController@index')->name('api.product.index');
-        $api->get('products/{product}', 'ProductController@show')->name('api.product.show');
+        $api->get('products', 'ProductsController@index')->name('api.products.index');
+        $api->get('products/{product}', 'ProductsController@show')->name('api.products.show');
     });
 
 });

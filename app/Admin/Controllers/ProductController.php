@@ -19,8 +19,8 @@ class ProductController extends AdminController
     {
         return Grid::make(new Product(), function (Grid $grid) {
             $grid->id->sortable();
-//            $grid->image;
-            $grid->picture()->image(config('app.url').'/uploads', 100, 100);
+            $grid->image;
+//            $grid->picture()->image(config('app.url').'/uploads', 100, 100);
             $grid->title;
             //$grid->description;
             $grid->on_sale;
@@ -73,7 +73,7 @@ class ProductController extends AdminController
             $form->display('id');
             $form->text('title');
             $form->text('description');
-            $form->image('image');
+            $form->image('image')->disk('public');
 //            $form->text('on_sale');
             $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('0');
             $form->text('rating');

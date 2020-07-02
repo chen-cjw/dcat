@@ -14,5 +14,5 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UserController');
-    $router->resource('products', 'ProductController');
+    $router->resource('products', 'ProductsController');
 });

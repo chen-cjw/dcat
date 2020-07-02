@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Models\Product;
 use App\Transformers\ProductTransformer;
 use Dingo\Api\Exception\ResourceException;
+use Dingo\Api\Exception\StoreResourceFailedException;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
+    // 商品列表
     public function index()
     {
         // 创建一个查询构造器
@@ -42,6 +44,7 @@ class ProductController extends Controller
         return $this->response->paginator($products, new ProductTransformer());
     }
 
+    // 商品详情
     public function show(Product $product, Request $request)
     {
         // 判断商品是否已经上架，如果没有上架则抛出异常。
@@ -49,5 +52,30 @@ class ProductController extends Controller
             throw new ResourceException('商品未上架');
         }
         return $this->response->item($product, new ProductTransformer());
+    }
+
+    // 收藏商品
+    public function favor(Product $product)
+    {
+        $user = $this->user;
+        if ($user->favoriteProducts()->find($product->id)) {
+            return new StoreResourceFailedException('已收藏');
+        }
+        $user->favoriteProducts()->attach($product);
+        return $this->response->created();
+    }
+
+    // 取消收藏
+    public function disfavor(Product $product)
+    {
+        $this->user->favoriteProducts()->detach($product);
+        return $this->response->created();
+    }
+
+    // 收藏列表
+    public function favorites()
+    {
+        $products = $this->user()->favoriteProducts()->paginate(config('app.default_page'));
+        return $this->response->paginator($products, new ProductTransformer());
     }
 }
