@@ -52,11 +52,18 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(UserAddress::class);
     }
 
+    // 收藏
     public function favoriteProducts()
     {
         return $this->belongsToMany(Product::class, 'user_favorite_products')
             ->withTimestamps()// 代表中间表带有时间戳字段
             ->orderBy('user_favorite_products.created_at', 'desc');//  代表默认的排序方式是根据中间表的创建时间倒序排序。
+    }
+
+    // 购物车
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 
     public function getJWTIdentifier()

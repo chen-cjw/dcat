@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UserAddressRequest extends FormRequest
+class UserAddressRequest extends BaseFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
