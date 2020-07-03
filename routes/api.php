@@ -39,9 +39,14 @@ $api->version('v1', [
             $api->post('products/{product}/favorite', 'ProductsController@favor')->name('api.products.favor');// 收藏商品
             $api->delete('products/{product}/favorite', 'ProductsController@disfavor')->name('api.products.disfavor');// 取消收藏
             // 添加购物车
-            $api->get('carts', 'CartController@index')->name('api.cart.index');
-            $api->post('carts', 'CartController@store')->name('api.cart.store');
-            $api->delete('carts/{sku}', 'CartController@destroy')->name('cart.destroy');
+            $api->get('carts', 'CartController@index')->name('api.carts.index');
+            $api->post('carts', 'CartController@store')->name('api.carts.store');
+            $api->delete('carts/{sku}', 'CartController@destroy')->name('api.carts.destroy');
+
+            // 提交订单
+            $api->post('orders', 'OrdersController@store')->name('api.orders.store');
+
+
         });
 
         $api->get('products', 'ProductsController@index')->name('api.products.index'); // 商品列表

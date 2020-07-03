@@ -10,8 +10,8 @@ class UserAddressesController extends Controller
 {
     public function index()
     {
-        $userAddress = auth('api')->user()->addresses()->orderBy('last_used_at','desc')->paginate();// 最后使用时间作为排序的
-        return $this->response->paginator($userAddress,new UserAddressTransformer());
+        $userAddress = auth('api')->user()->addresses()->orderBy('last_used_at','desc')->get();// 最后使用时间作为排序的
+        return $this->response->collection($userAddress,new UserAddressTransformer());
     }
 
     public function store(UserAddressRequest $request)
