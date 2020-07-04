@@ -5,13 +5,13 @@ use League\Fractal\TransformerAbstract;
 
 class OrderItemTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['product'];
+    protected $availableIncludes = ['product','productSku'];
 
     public function transform(OrderItem $orderItem)
     {
         return [
             'id' => $orderItem->id,
-            'sample_quantity' => $orderItem->sample_quantity,
+            'num' => $orderItem->num,
             'price' => $orderItem->price,
             'rating' => $orderItem->rating,
             'review' => $orderItem->review, // 用户评价
@@ -23,5 +23,10 @@ class OrderItemTransformer extends TransformerAbstract
     {
         return $this->item($orderItem->product,new ProductTransformer());
     }
+    public function includeProductSku(OrderItem $orderItem)
+    {
+        return $this->item($orderItem->productSku,new ProductSkuTransformer());
+    }
+
 
 }

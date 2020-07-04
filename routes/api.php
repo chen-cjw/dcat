@@ -44,6 +44,8 @@ $api->version('v1', [
             $api->delete('carts/{sku}', 'CartController@destroy')->name('api.carts.destroy');
 
             // 提交订单
+            $api->get('orders', 'OrdersController@index')->name('api.orders.index');
+            $api->get('orders/{order}', 'OrdersController@show')->name('api.orders.show');
             $api->post('orders', 'OrdersController@store')->name('api.orders.store');
 
 

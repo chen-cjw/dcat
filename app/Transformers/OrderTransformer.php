@@ -36,4 +36,5 @@ class OrderTransformer extends TransformerAbstract
     {
         return $this->collection($order->items,new OrderItemTransformer());
     }
+
 }
