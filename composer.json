@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "liyu/dingo-serializer-switch": "^0.3.1",
         "predis/predis": "^1.1",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "yansongda/pay": "^2.9"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
