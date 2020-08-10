@@ -10,6 +10,14 @@ use Dcat\Admin\Controllers\AdminController;
 
 class UserController extends AdminController
 {
+    protected $title = '用户';
+
+    protected $description = [
+        //        'index'  => 'Index',
+                'show'   => '展示',
+        //        'edit'   => 'Edit',
+        //        'create' => 'Create',
+    ];
     /**
      * Make a grid builder.
      *

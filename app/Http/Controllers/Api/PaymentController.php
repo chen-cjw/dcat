@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Symfony\Component\Translation\Exception\InvalidResourceException;
 
 class PaymentController extends Controller
 {
@@ -12,7 +14,7 @@ class PaymentController extends Controller
         $this->authorize('own', $order);
         // 校验订单状态
         if ($order->paid_at || $order->closed) {
-            throw new InvalidRequestException('订单状态不正确');
+            throw new InvalidResourceException('订单状态不正确');
         }
         // scan 方法为拉起微信扫码支付
         return app('wechat_pay')->scan([
