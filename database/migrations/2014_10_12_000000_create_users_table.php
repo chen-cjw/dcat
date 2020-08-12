@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('wx_openid')->unique()->nullable()->comment('公众号');
             $table->string('ml_openid')->unique()->nullable()->comment('小程序');
             $table->string('unionid')->unique()->nullable()->comment('公众号和小程序的唯一标识');
+            $table->boolean('is_vip')->default(false)->comment('vip可见佣金');
             $table->timestamps();
         });
     }

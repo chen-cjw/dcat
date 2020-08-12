@@ -8,6 +8,17 @@ use Illuminate\Support\Str;
 class Product extends Model
 {
 
+    const TYPE_SECKILL = 'seckill';
+
+    public static $typeMap = [
+        self::TYPE_SECKILL => '秒杀商品',
+    ];
+    //
+    public function seckill()
+    {
+        return $this->hasOne(SeckillProduct::class);
+    }
+
     protected $fillable = [
         'title', 'description', 'image', 'on_sale',
         'rating', 'sold_count', 'review_count', 'price'

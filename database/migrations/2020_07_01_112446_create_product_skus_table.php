@@ -19,6 +19,7 @@ class CreateProductSkusTable extends Migration
             $table->string('description')->comment('SKU 描述');
             $table->decimal('price', 10, 2)->comment('SKU 价格');
             $table->unsignedInteger('stock')->comment('SKU 库存');
+            $table->decimal('commission',10,2)->comment('佣金价格');
             $table->unsignedBigInteger('product_id')->comment('所属商品 id');// 外键
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
