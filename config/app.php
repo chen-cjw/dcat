@@ -8,6 +8,7 @@ return [
     |
     */
     'order_ttl' => env('ORDER_TTL', 1800),
+    'seckill_order_ttl' => env('SECKILL_ORDER_TTL', 1800),
     /*
     |--------------------------------------------------------------------------
     | 默认页数

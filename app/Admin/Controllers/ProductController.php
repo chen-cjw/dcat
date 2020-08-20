@@ -69,7 +69,8 @@ class ProductController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new Product(), function (Form $form) {
+        // 一对多的时候，要使用预加载
+        return Form::make(Product::with('skus'), function (Form $form) {
             $form->display('id');
             $form->text('title')->rules('required');
             $form->text('description')->rules('required');
@@ -80,6 +81,7 @@ class ProductController extends AdminController
             $form->text('sold_count')->rules('required');
             $form->text('review_count')->rules('required');
             $form->text('price')->rules('required');
+
 
             $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
                 $form->text('title', 'SKU 名称')->rules('required');

@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Dcat Admin',
+    'name' => '商城 后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/vendors/dcat-admin/images/logo.png" width="35"> &nbsp;Dcat Admin',
+    'logo' => '<img src="/vendors/dcat-admin/images/logo.png" width="35"> &nbsp;Shop Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -304,6 +304,7 @@ return [
     | This value is the layout of admin pages.
     */
     'layout' => [
+        'dark_mode_switch' => true,
         // indigo, blue, blue-light, blue-dark, green
         'color' => 'indigo',
 
