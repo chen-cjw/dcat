@@ -16,30 +16,34 @@ class AuthController extends Controller
         $token = \Auth::guard('api')->fromUser($user);
         return $this->respondWithToken($token,$user)->setStatusCode(201);
     }
-    // 小程序 获取用户的openid
-    public function mlOpenidStore1(AuthMlOpenidStoreRequest $request,User $user)
-    {
-        $code = $request->code;
-        $sessionUser = $user->ml_openid();
-        $openid = $sessionUser['openid'];
-        $session_key = $sessionUser['session_key'];
-        Cache::put($code, ['session_key'=>$session_key,'ml_openid'=>$openid], 300);
-        if($user = User::where('ml_openid', $openid)->first()) {
-            if ($user->phone) {
-                $token = \Auth::guard('api')->fromUser($user);
-                return $this->respondWithToken($token,$openid,$user);
-            }
-            return $this->oauthNo();// 第二次去拿手机号码
-        }
-        User::create($this->createUser($sessionUser,$request));
-        return $this->oauthNo();
-    }
 
+    // 小程序 获取用户的openid
+    public function store(AuthMlOpenidStoreRequest $request,User $user)
+    {
+        $app = app('wechat.mini_program');
+        $code = $request->code;
+        $sessionUser = $app->auth->session($code);
+        $openid = $sessionUser['openid'];
+        if($user = User::where('ml_openid', $openid)->first()) {
+            $user->update(['avatar' => $request->avatarUrl]);
+            return $this->respond($user);
+        }
+        $user = User::create($this->createUser($sessionUser,$request));
+        return $this->respond($user);
+    }
+    // 创建要获取的数据
     protected function createUser($sessionUser,$request)
     {
         return [ // 不存在此用户添加
             'ml_openid'=>$sessionUser['openid'],
+            'nickname' => $request->nickName,
+            'avatar' => $request->avatarUrl,
         ];
+    }
+    // 创建返回
+    protected function respond($user) {
+        $token = \Auth::guard('api')->fromUser($user);
+        return $this->respondWithToken($token,$user)->setStatusCode(201);
     }
 
     // 获取手机号码

@@ -26,6 +26,8 @@ $api->version('v1', [
 
     $api->get('auth','AuthController@index')->name('api.auth.index');
     $api->post('auth','AuthController@testLogin')->name('api.auth.store');
+//    $api->post('auth','AuthController@store')->name('api.auth.store');
+
     // 登陆 绑定路由，可依赖注入获取id
     $api->group(['middleware' => ['bindings']], function ($api) {
 
