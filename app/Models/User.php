@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -75,6 +76,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
+    // 邀请码
+    public function generateRefCode($length = 6)
+    {
+        $refCode = \substr(\str_shuffle(\str_repeat(config('game.refCodeCharacters'), $length)), 0, $length);
+        $count = 0;
+        while (!\is_null(User::where('ref_code', $refCode)->first())) {
+            $count++;
+            $refCode = \substr(\str_shuffle(\str_repeat(config('game.refCodeCharacters'), $length)), 0, $length);
+            if ($count == 100) {
+                throw new BadRequestException();
+            }
+        }
+        return $refCode;
+    }
+
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.

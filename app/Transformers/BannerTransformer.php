@@ -14,6 +14,7 @@ class BannerTransformer extends TransformerAbstract
             'href_url' => $banner->href_url,
             'sort_num' => $banner->sort_num,
             'on_sale' => $banner->on_sale,
+            'position'=>$banner->position,
             'created_at' => $banner->created_at->toDateTimeString(),
             'updated_at' => $banner->updated_at->toDateTimeString(),
         ];

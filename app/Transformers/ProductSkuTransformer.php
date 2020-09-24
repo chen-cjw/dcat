@@ -14,8 +14,9 @@ class ProductSkuTransformer extends TransformerAbstract
             'id' => $sku->id,
             'title' => $sku->title,
             'description' => $sku->description,
-            'price' => $sku->price,
+            'price' => auth('api')->user()->is_vip==0 ? $sku->sell_price : $sku->buy_price, // todo 显示进货/平时售卖
             'stock' => $sku->stock,
+            'commission'=> $sku->commission, // 佣金
             'created_at' => $sku->created_at->toDateTimeString(),
             'updated_at' => $sku->updated_at->toDateTimeString(),
         ];
